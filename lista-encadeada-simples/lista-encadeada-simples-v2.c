@@ -23,7 +23,7 @@ void printOptions() {
   printf("5 -> Inicializar a lista (versao 2)\n");
   printf("6 -> Inverter a lista\n");
   printf("7 -> Remover no meio\n");
-  printf("8 -> ... \n");
+  printf("8 -> Remover no fim\n");
   printf("9 -> Sair \n:");
 }
 
@@ -34,6 +34,7 @@ int Inserir_fim_LS(Tno_ls **p_inicio, int info);
 int Inserir_meio_LS(Tno_ls **p_inicio, int info, int pos);
 int Remover_inicio_LS(Tno_ls **p_inicio);
 int Remover_meio_LS(Tno_ls **p_inicio, int pos);
+int Remover_fim_LS(Tno_ls **p_inicio);
 int Listar_LS(Tno_ls *c_inicio);
 int Obter_pos_LS(Tno_ls *c_inicio, int dado, int *pos);
 int Obter_Tamanho_LS(Tno_ls *c_inicio, int *tam);
@@ -87,7 +88,7 @@ int main(void) {
     case 4:
       erro = Listar_LS(inicio);
       if (erro == 1) {
-        printf("\nLista vazia. Impossivel listar");
+        printf("\nLista vazia. Impossivel listar !\n");
       }
 
       system("pause");
@@ -122,7 +123,11 @@ int main(void) {
       system("pause");
       break;
     case 8:
-      // FAZER
+      erro = Remover_fim_LS(&inicio);
+      if (erro == 1) {
+        printf("\nLista vazia. Impossivel remover ! \n");
+      }
+
       system("pause");
       break;
     case 9:
@@ -313,6 +318,27 @@ int Remover_meio_LS(Tno_ls **p_inicio, int pos) {
   remover = aux->prox;
   aux2 = remover->prox;
   aux->prox = aux2;
+  free(remover);
+
+  return 0;
+}
+
+int Remover_fim_LS(Tno_ls **p_inicio) {
+  if (*p_inicio == NULL)
+    return 1;
+  else if ((*p_inicio)->prox == NULL) {
+    *p_inicio = NULL;
+    free(*p_inicio);
+    return 0;
+  }
+
+  Tno_ls *aux, *remover;
+  aux = *p_inicio;
+  while (aux->prox->prox != NULL)
+    aux = aux->prox;
+
+  remover = aux->prox;
+  aux->prox = NULL;
   free(remover);
 
   return 0;

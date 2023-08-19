@@ -22,7 +22,7 @@ void printOptions() {
   printf("4 -> Mostrar toda a lista \n");
   printf("5 -> Inicializar a lista (versao 2)\n");
   printf("6 -> Inverter a lista\n");
-  printf("7 -> ... \n");
+  printf("7 -> Remover no meio\n");
   printf("8 -> ... \n");
   printf("9 -> Sair \n:");
 }
@@ -33,11 +33,12 @@ int Inserir_inicio_LS(Tno_ls **p_inicio, int info);
 int Inserir_fim_LS(Tno_ls **p_inicio, int info);
 int Inserir_meio_LS(Tno_ls **p_inicio, int info, int pos);
 int Remover_inicio_LS(Tno_ls **p_inicio);
+int Remover_meio_LS(Tno_ls **p_inicio, int pos);
 int Listar_LS(Tno_ls *c_inicio);
 int Obter_pos_LS(Tno_ls *c_inicio, int dado, int *pos);
 int Obter_Tamanho_LS(Tno_ls *c_inicio, int *tam);
-int Inverte_LS(Tno_ls **p_inicio);
-int Inverte_LS_2(Tno_ls **p_inicio);
+int Inverter_LS(Tno_ls **p_inicio);
+int Inverter_LS_2(Tno_ls **p_inicio);
 
 int main(void) {
 
@@ -63,19 +64,6 @@ int main(void) {
       scanf("%d", &info);
 
       erro = Inserir_inicio_LS(&inicio, info);
-      if (erro == 0)
-        printf("Insercao realizada com sucesso\n");
-
-      system("pause");
-      break;
-    case 10:
-      printf("Dado para insercao na lista: ");
-      scanf("%d", &info);
-
-      printf("Posicao de insercao: ");
-      scanf("%d", &pos);
-
-      erro = Inserir_meio_LS(&inicio, info, pos);
       if (erro == 0)
         printf("Insercao realizada com sucesso\n");
 
@@ -122,7 +110,15 @@ int main(void) {
       system("pause");
       break;
     case 7:
-      // FAZER
+      printf("Posicao para remocao: ");
+      scanf("%d", &pos);
+
+      erro = Remover_meio_LS(&inicio, pos);
+      if (erro == 1)
+        printf("Lista vazia. Remocao nao realizada !\n");
+      else if (erro == 2)
+        printf("Posicao nao existe. Remocao nao realizada !\n");
+
       system("pause");
       break;
     case 8:
@@ -130,6 +126,19 @@ int main(void) {
       system("pause");
       break;
     case 9:
+      break;
+    case 10:
+      printf("Dado para insercao na lista: ");
+      scanf("%d", &info);
+
+      printf("Posicao de insercao: ");
+      scanf("%d", &pos);
+
+      erro = Inserir_meio_LS(&inicio, info, pos);
+      if (erro == 0)
+        printf("Insercao realizada com sucesso\n");
+
+      system("pause");
       break;
     default:
       printf("\n\n Opcao nao valida");
@@ -278,6 +287,35 @@ int Remover_inicio_LS(Tno_ls **p_inicio) {
     free(aux);
     return 0;
   }
+}
+
+int Remover_meio_LS(Tno_ls **p_inicio, int pos) {
+  if (*p_inicio == NULL)
+    return 1;
+
+  int tam;
+  Obter_Tamanho_LS(*p_inicio, &tam);
+  if (pos >= tam)
+    return 2;
+
+  if (tam == 1) {
+    *p_inicio = NULL;
+    free(*p_inicio);
+    return 0;
+  }
+
+  Tno_ls *aux, *aux2, *remover;
+  aux = *p_inicio;
+  for (int contador = 0; contador < pos; contador++) {
+    aux = aux->prox;
+  }
+
+  remover = aux->prox;
+  aux2 = remover->prox;
+  aux->prox = aux2;
+  free(remover);
+
+  return 0;
 }
 
 int Inverter_LS(Tno_ls **p_inicio) {

@@ -10,7 +10,10 @@ void awaitUserInput() { system("pause"); }
 #ifdef linux
 void clearConsole() { system("clear"); }
 
-void awaitUserInput() { getchar(); }
+void awaitUserInput() {
+  printf("\nPressione qualquer tecla para continuar...\n");
+  getchar();
+}
 #endif
 
 struct no_ls {

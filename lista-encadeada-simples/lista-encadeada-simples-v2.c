@@ -46,10 +46,10 @@ void printOptions() {
   printf(":");
 }
 
-int Inicializar_LS(Tno_ls **p_inicio);
-int Inicializar2_LS(Tno_ls **p_inicio);
-int Inserir_inicio_LS(Tno_ls **p_inicio, int info);
-int Inserir_fim_LS(Tno_ls **p_inicio, int info);
+int initializeEmptyList(Tno_ls **p_inicio);
+int cleanAllListElements(Tno_ls **p_inicio);
+int insertNodeInListStart(Tno_ls **p_inicio, int info);
+int insertNodeInListEnd(Tno_ls **p_inicio, int info);
 int Inserir_meio_LS(Tno_ls **p_inicio, int info, int pos);
 int Remover_inicio_LS(Tno_ls **p_inicio);
 int Remover_meio_LS(Tno_ls **p_inicio, int pos);
@@ -68,7 +68,7 @@ int main(void) {
   int resp, pos;
   Tno_ls *inicio;
   int chosenOption;
-  int erro = Inicializar_LS(&inicio);
+  int erro = initializeEmptyList(&inicio);
 
   printf("Tamanho do no: %d\n\n", sizeof(Tno_ls));
   awaitUserInput();
@@ -85,7 +85,7 @@ int main(void) {
       printf("Dado para insercao na lista: ");
       scanf("%d", &info);
 
-      erro = Inserir_inicio_LS(&inicio, info);
+      erro = insertNodeInListStart(&inicio, info);
       if (erro == 0)
         printf("Insercao realizada com sucesso\n");
 
@@ -95,7 +95,7 @@ int main(void) {
       printf("Dado para insercao na lista: ");
       scanf("%d", &info);
 
-      Inserir_fim_LS(&inicio, info);
+      insertNodeInListEnd(&inicio, info);
 
       break;
     case 3:
@@ -115,7 +115,7 @@ int main(void) {
       awaitUserInput();
       break;
     case 5:
-      erro = Inicializar2_LS(&inicio);
+      erro = cleanAllListElements(&inicio);
 
       printf("\nInicializacao realizada com sucesso !\n");
       printf("\nLISTA VAZIA !\n");
@@ -220,12 +220,12 @@ int Listar_LS(Tno_ls *c_inicio) {
   return 0; /* sem erro */
 }
 
-int Inicializar_LS(Tno_ls **p_inicio) {
+int initializeEmptyList(Tno_ls **p_inicio) {
   *p_inicio = NULL;
   return 0; /* sem erro */
 }
 
-int Inicializar2_LS(Tno_ls **p_inicio) {
+int cleanAllListElements(Tno_ls **p_inicio) {
   Tno_ls *percorre, *aux;
   if (*p_inicio != NULL) {
     percorre = *p_inicio;
@@ -253,7 +253,7 @@ int Obter_Tamanho_LS(Tno_ls *c_inicio, int *tam) {
   }
 }
 
-int Inserir_inicio_LS(Tno_ls **p_inicio, int info) {
+int insertNodeInListStart(Tno_ls **p_inicio, int info) {
   Tno_ls *no_novo;
 
   no_novo = (Tno_ls *)malloc(sizeof(Tno_ls));
@@ -284,10 +284,10 @@ int Inserir_meio_LS(Tno_ls **p_inicio, int info, int pos) {
   no_novo->dado = info;
 
   if (pos == 1) {
-    Inserir_inicio_LS(p_inicio, info);
+    insertNodeInListStart(p_inicio, info);
   } else {
     if (pos == tam + 1) {
-      Inserir_fim_LS(p_inicio, info);
+      insertNodeInListEnd(p_inicio, info);
     } else {
       int pos_aux = 1;
       percorre = *p_inicio;
@@ -303,7 +303,7 @@ int Inserir_meio_LS(Tno_ls **p_inicio, int info, int pos) {
   return 0;
 }
 
-int Inserir_fim_LS(Tno_ls **p_inicio, int info) {
+int insertNodeInListEnd(Tno_ls **p_inicio, int info) {
   Tno_ls *no_novo, *percorre;
 
   no_novo = (Tno_ls *)malloc(sizeof(Tno_ls));
@@ -442,12 +442,12 @@ int Inverter_LS_2(Tno_ls **p_inicio) {
   } else if (tam == 1) {
     return 0; /*Caso a lista tenha apenas um n�.*/
   } else {
-    Inicializar_LS(&inicio_lista_aux);
+    initializeEmptyList(&inicio_lista_aux);
     for (i = 1; i <= tam; i++) {
       info = (*p_inicio)->dado; /* obtendo o dado do 1o. n� */
       // Obter_Dado_LS (p_inicio, 1, &info);
       Remover_inicio_LS(p_inicio);
-      Inserir_inicio_LS(&inicio_lista_aux, info);
+      insertNodeInListStart(&inicio_lista_aux, info);
     }
     *p_inicio = inicio_lista_aux;
   }

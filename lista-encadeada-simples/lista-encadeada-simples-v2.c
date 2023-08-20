@@ -1,6 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef _WIN32
+void clearConsole() { system("cls"); }
+
+void awaitUserInput() { system("pause"); }
+#endif
+
+#ifdef linux
+void clearConsole() { system("clear"); }
+
+void awaitUserInput() { getchar(); }
+#endif
+
 struct no_ls {
   int dado;
   struct no_ls *prox;
@@ -24,7 +36,8 @@ void printOptions() {
   printf("6 -> Inverter a lista\n");
   printf("7 -> Remover no meio\n");
   printf("8 -> Remover no fim\n");
-  printf("9 -> Sair \n:");
+  printf("9 -> Sair\n");
+  printf(":");
 }
 
 int Inicializar_LS(Tno_ls **p_inicio);
@@ -50,10 +63,10 @@ int main(void) {
   int erro = Inicializar_LS(&inicio);
 
   printf("Tamanho do no: %d\n\n", sizeof(Tno_ls));
-  system("pause");
+  awaitUserInput();
 
   do {
-    system("cls");
+    clearConsole();
     printf("LISTA ENCADEADA SIMPLES - LES");
 
     printOptions();
@@ -68,7 +81,7 @@ int main(void) {
       if (erro == 0)
         printf("Insercao realizada com sucesso\n");
 
-      system("pause");
+      awaitUserInput();
       break;
     case 2:
       printf("Dado para insercao na lista: ");
@@ -83,7 +96,7 @@ int main(void) {
         printf("\nLista vazia. Impossivel remover");
       }
 
-      system("pause");
+      awaitUserInput();
       break;
     case 4:
       erro = Listar_LS(inicio);
@@ -91,7 +104,7 @@ int main(void) {
         printf("\nLista vazia. Impossivel listar !\n");
       }
 
-      system("pause");
+      awaitUserInput();
       break;
     case 5:
       erro = Inicializar2_LS(&inicio);
@@ -99,7 +112,7 @@ int main(void) {
       printf("\nInicializacao realizada com sucesso !\n");
       printf("\nLISTA VAZIA !\n");
 
-      system("pause");
+      awaitUserInput();
       break;
     case 6:
       erro = Inverter_LS_2(&inicio);
@@ -108,7 +121,7 @@ int main(void) {
       else
         printf("\nInversao realizada !\n");
 
-      system("pause");
+      awaitUserInput();
       break;
     case 7:
       printf("Posicao para remocao: ");
@@ -120,7 +133,7 @@ int main(void) {
       else if (erro == 2)
         printf("Posicao nao existe. Remocao nao realizada !\n");
 
-      system("pause");
+      awaitUserInput();
       break;
     case 8:
       erro = Remover_fim_LS(&inicio);
@@ -128,7 +141,7 @@ int main(void) {
         printf("\nLista vazia. Impossivel remover ! \n");
       }
 
-      system("pause");
+      awaitUserInput();
       break;
     case 9:
       break;
@@ -143,10 +156,10 @@ int main(void) {
       if (erro == 0)
         printf("Insercao realizada com sucesso\n");
 
-      system("pause");
+      awaitUserInput();
       break;
     default:
-      printf("\n\n Opcao nao valida");
+      printf("\n\n Opcao invalida !\n");
     }
 
     getchar();

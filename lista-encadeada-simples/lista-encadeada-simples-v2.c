@@ -42,6 +42,7 @@ void printOptions() {
   printf("9 -> Sair\n");
   printf("10 -> Inserir no meio\n");
   printf("11 -> Verificar se dado repete na lista\n");
+  printf("12 -> Obter quantidade de dados maior que o valor inserido\n");
   printf(":");
 }
 
@@ -59,6 +60,7 @@ int Obter_Tamanho_LS(Tno_ls *c_inicio, int *tam);
 int Inverter_LS(Tno_ls **p_inicio);
 int Inverter_LS_2(Tno_ls **p_inicio);
 int Ver_Repete_Dado_LS(Tno_ls *c_inicio, int info, int *resp);
+int Maiorque_Dado_LS(Tno_ls *c_inicio, int info, int *quant);
 
 int main(void) {
 
@@ -169,7 +171,7 @@ int main(void) {
       scanf("%d", &info);
 
       int resp;
-      int erro = Ver_Repete_Dado_LS(inicio, info, &resp);
+      erro = Ver_Repete_Dado_LS(inicio, info, &resp);
       if (erro == 0) {
         if (resp == 1)
           printf("O dado esta repetido na estrutura !\n");
@@ -177,6 +179,21 @@ int main(void) {
           printf("O dado nao esta repetido na estrutura !\n");
       } else {
         printf("\nLista vazia. Verificacao nao realizada !\n");
+      }
+
+      awaitUserInput();
+      break;
+    case 12:
+      printf(
+          "Dado para contar quantidade de elementos maior que ele na lista: ");
+      scanf("%d", &info);
+
+      int quant;
+      erro = Maiorque_Dado_LS(inicio, info, &quant);
+      if (erro == 0) {
+        printf("\nQuantidade de elementos maior que o dado valor: %d\n", quant);
+      } else {
+        printf("\nLista vazia. Busca nao realizada !\n");
       }
 
       awaitUserInput();
@@ -455,6 +472,21 @@ int Ver_Repete_Dado_LS(Tno_ls *c_inicio, int info, int *resp) {
       }
     }
 
+    aux = aux->prox;
+  }
+
+  return 0;
+}
+
+int Maiorque_Dado_LS(Tno_ls *c_inicio, int info, int *quant) {
+  *quant = 0;
+  if (c_inicio == NULL)
+    return 1;
+
+  Tno_ls *aux = c_inicio;
+  while (aux != NULL) {
+    if (aux->dado > info)
+      (*quant)++;
     aux = aux->prox;
   }
 

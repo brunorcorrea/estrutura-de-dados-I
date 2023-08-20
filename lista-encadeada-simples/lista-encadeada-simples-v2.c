@@ -40,6 +40,8 @@ void printOptions() {
   printf("7 -> Remover no meio\n");
   printf("8 -> Remover no fim\n");
   printf("9 -> Sair\n");
+  printf("10 -> Inserir no meio\n");
+  printf("11 -> Verificar se dado repete na lista\n");
   printf(":");
 }
 
@@ -56,6 +58,7 @@ int Obter_pos_LS(Tno_ls *c_inicio, int dado, int *pos);
 int Obter_Tamanho_LS(Tno_ls *c_inicio, int *tam);
 int Inverter_LS(Tno_ls **p_inicio);
 int Inverter_LS_2(Tno_ls **p_inicio);
+int Ver_Repete_Dado_LS(Tno_ls *c_inicio, int info, int *resp);
 
 int main(void) {
 
@@ -158,6 +161,23 @@ int main(void) {
       erro = Inserir_meio_LS(&inicio, info, pos);
       if (erro == 0)
         printf("Insercao realizada com sucesso\n");
+
+      awaitUserInput();
+      break;
+    case 11:
+      printf("Dado para verificar repeticao na lista: ");
+      scanf("%d", &info);
+
+      int resp;
+      int erro = Ver_Repete_Dado_LS(inicio, info, &resp);
+      if (erro == 0) {
+        if (resp == 1)
+          printf("O dado esta repetido na estrutura !\n");
+        else
+          printf("O dado nao esta repetido na estrutura !\n");
+      } else {
+        printf("\nLista vazia. Verificacao nao realizada !\n");
+      }
 
       awaitUserInput();
       break;
@@ -414,5 +434,29 @@ int Inverter_LS_2(Tno_ls **p_inicio) {
     }
     *p_inicio = inicio_lista_aux;
   }
+  return 0;
+}
+
+int Ver_Repete_Dado_LS(Tno_ls *c_inicio, int info, int *resp) {
+  if (c_inicio == NULL)
+    return 1;
+
+  *resp = 0;
+  Tno_ls *aux = c_inicio;
+  while (aux->prox != NULL) {
+    if (aux->dado == info) {
+      Tno_ls *aux2 = aux->prox;
+      while (aux2 != NULL) {
+        if (aux2->dado == info) {
+          (*resp)++;
+          return 0;
+        }
+        aux2 = aux2->prox;
+      }
+    }
+
+    aux = aux->prox;
+  }
+
   return 0;
 }

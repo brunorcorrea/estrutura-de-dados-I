@@ -42,11 +42,11 @@ int Inserir_meio_LS(Tno_ls **p_inicio, int info, int pos) {
   Tno_ls *no_novo, *percorre;
 
   if (pos <= 0)
-    return 1; /*) posicao invalida para insercao */
+    return 1;
 
   Obter_Tamanho_LS(*p_inicio, &tam);
   if (pos > tam + 1)
-    return 2; /* posicao invalida. Acima do tamanho da lista */
+    return 2;
 
   no_novo = (Tno_ls *)malloc(sizeof(Tno_ls));
   no_novo->dado = info;
@@ -59,8 +59,7 @@ int Inserir_meio_LS(Tno_ls **p_inicio, int info, int pos) {
     } else {
       int pos_aux = 1;
       percorre = *p_inicio;
-      while (pos_aux != pos - 1) /* parar uma posicao antes */
-      {
+      while (pos_aux != pos - 1) {
         percorre = percorre->prox;
         pos_aux++;
       }
@@ -78,9 +77,9 @@ int insertNodeInListEnd(Tno_ls **p_inicio, int info) {
   no_novo->dado = info;
   no_novo->prox = NULL;
 
-  if (*p_inicio == NULL) { /* lista vazia. */
+  if (*p_inicio == NULL) {
     *p_inicio = no_novo;
-  } else { /* lista nao vazia */
+  } else {
     percorre = *p_inicio;
     while (percorre->prox != NULL) {
       percorre = percorre->prox;
@@ -93,7 +92,7 @@ int insertNodeInListEnd(Tno_ls **p_inicio, int info) {
 int Listar_LS(Tno_ls *c_inicio) {
   int i;
   if (c_inicio == NULL) {
-    return 1; /* lista vazia */
+    return 1;
   }
   printf("LISTA ::  ");
   while (c_inicio != NULL) {
@@ -101,7 +100,7 @@ int Listar_LS(Tno_ls *c_inicio) {
     c_inicio = c_inicio->prox;
   }
   printf("\n");
-  return 0; /* sem erro */
+  return 0;
 }
 
 int Obter_Tamanho_LS(Tno_ls *c_inicio, int *tam) {
@@ -123,12 +122,12 @@ int Obter_Pos_LS(Tno_ls *c_inicio, int valor, int *pos) {
   while (c_inicio != NULL) {
     (*pos)++;
     if (valor == c_inicio->dado)
-      return 0; /* dado encontrado */
+      return 0;
     c_inicio = c_inicio->prox;
   }
   if (c_inicio != NULL)
     *pos = 0;
-  return 1; /* dado nao encontrado */
+  return 1;
 }
 
 int Remover_inicio_LS(Tno_ls **p_inicio) {
@@ -197,30 +196,20 @@ int Inverter_LS(Tno_ls **p_inicio) {
   Tno_ls *percorre, *aux_1, *aux_2, *aux_3;
   percorre = *p_inicio;
   if (percorre == NULL) {
-    return 1; /*Caso a lista esteja vazia. */
+    return 1;
   } else if (percorre->prox == NULL) {
-    return 0; /*Caso a lista tenha apenas um n�. */
+    return 0;
   } else {
-    aux_1 = *p_inicio; /*O ponteiro aux_a aponta para o primeiro n�, uma vez que
-                          o ponteiro "ini" passar� a apontar para o �ltimo. */
-    aux_2 = aux_1->prox; /*O ponteiro aux_p passa a apontar para o segundo n� da
-                            lista.*/
-    aux_3 = aux_2->prox; /*O ponteiro aux_v passa a apontar para o terceiro n�
-                            da lista.*/
-    aux_1->prox = NULL; /*O primeiro n� da lista passa a ser o �ltimo, apontando
-                           para NULL.*/
-    aux_2->prox = aux_1; /*O segundo n� da lista passa a apontar para o
-                            primeiro, come�ando a invers�o da lista.*/
-                         /*In�cio - Processo de invers�o.*/
+    aux_1 = *p_inicio;
+    aux_2 = aux_1->prox;
+    aux_3 = aux_2->prox;
+    aux_1->prox = NULL;
+    aux_2->prox = aux_1;
     while (aux_3 != NULL) {
-      aux_1 =
-          aux_2; /*O ponteiro aux_a pega o valor do n� a sua frente na lista.*/
-      aux_2 =
-          aux_3; /*O ponteiro aux_p pega o valor do n� a sua frente na lista.*/
-      aux_3 = aux_3->prox; /*O ponteiro aux_v pega o valor do n� a sua frente na
-                              lista.*/
-      aux_2->prox = aux_1; /*O n� para o qual aux_p est� apontado passa a
-                              apontar para o n� anterior a ele na lista.*/
+      aux_1 = aux_2;
+      aux_2 = aux_3;
+      aux_3 = aux_3->prox;
+      aux_2->prox = aux_1;
     }
     *p_inicio = aux_2;
   }
@@ -230,17 +219,17 @@ int Inverter_LS(Tno_ls **p_inicio) {
 
 int Inverter_LS_2(Tno_ls **p_inicio) {
   int i, erro, tam, info;
-  Tno_ls *inicio_lista_aux; /* lista auxiliar */
+  Tno_ls *inicio_lista_aux;
 
   erro = Obter_Tamanho_LS(*p_inicio, &tam);
   if (tam == 0) {
-    return 1; /*Caso a lista esteja vazia.*/
+    return 1;
   } else if (tam == 1) {
-    return 0; /*Caso a lista tenha apenas um n�.*/
+    return 0;
   } else {
     initializeEmptyList(&inicio_lista_aux);
     for (i = 1; i <= tam; i++) {
-      info = (*p_inicio)->dado; /* obtendo o dado do 1o. n� */
+      info = (*p_inicio)->dado;
       // Obter_Dado_LS (p_inicio, 1, &info);
       Remover_inicio_LS(p_inicio);
       insertNodeInListStart(&inicio_lista_aux, info);

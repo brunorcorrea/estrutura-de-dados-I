@@ -1,34 +1,34 @@
 #if !defined(LES_METHODS_H)
 #define LES_METHODS_H
 
-struct no_ls {
+struct listNode {
   int dado;
-  struct no_ls *prox;
+  struct listNode *prox;
 };
 
-typedef struct no_ls Tno_ls;
+typedef struct listNode ListNode;
 
-int initializeEmptyList(Tno_ls **p_inicio);
-int cleanAllListNodes(Tno_ls **p_inicio);
+int initializeEmptyList(ListNode **p_inicio);
+int cleanAllListNodes(ListNode **p_inicio);
 
-int insertNodeInListStart(Tno_ls **p_inicio, int info);
-int insertNodeInListEnd(Tno_ls **p_inicio, int info);
-int insertNodeInListGivenPosition(Tno_ls **p_inicio, int info, int pos);
+int insertNodeInListStart(ListNode **p_inicio, int info);
+int insertNodeInListEnd(ListNode **p_inicio, int info);
+int insertNodeInListGivenPosition(ListNode **p_inicio, int info, int pos);
 
-int removeNodeInListStart(Tno_ls **p_inicio);
-int removeNodeInListEnd(Tno_ls **p_inicio);
-int removeNodeInListGivenPosition(Tno_ls **p_inicio, int pos);
+int removeNodeInListStart(ListNode **p_inicio);
+int removeNodeInListEnd(ListNode **p_inicio);
+int removeNodeInListGivenPosition(ListNode **p_inicio, int pos);
 
-int getAllListNodes(Tno_ls *c_inicio);
+int getAllListNodes(ListNode *c_inicio);
 
-int getGivenValuePosition(Tno_ls *c_inicio, int dado, int *pos);
-int getListSize(Tno_ls *c_inicio, int *tam);
+int getGivenValuePosition(ListNode *c_inicio, int dado, int *pos);
+int getListSize(ListNode *c_inicio, int *tam);
 
-int invertList(Tno_ls **p_inicio);
-int invertList_2(Tno_ls **p_inicio);
+int invertList(ListNode **p_inicio);
+int invertList_2(ListNode **p_inicio);
 
-int VerifyRepeatedValueInList(Tno_ls *c_inicio, int info, int *resp);
+int VerifyRepeatedValueInList(ListNode *c_inicio, int info, int *resp);
 
-int countElementsAboveValue(Tno_ls *c_inicio, int info, int *quant);
+int countElementsAboveValue(ListNode *c_inicio, int info, int *quant);
 
 #endif // LES_METHODS_H

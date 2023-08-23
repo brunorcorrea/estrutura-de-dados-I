@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int initializeEmptyList(Tno_ls **p_inicio) {
+int initializeEmptyList(ListNode **p_inicio) {
   *p_inicio = NULL;
   return 0;
 }
 
-int cleanAllListNodes(Tno_ls **p_inicio) {
-  Tno_ls *percorre, *aux;
+int cleanAllListNodes(ListNode **p_inicio) {
+  ListNode *percorre, *aux;
   if (*p_inicio != NULL) {
     percorre = *p_inicio;
     while (percorre != NULL) {
@@ -21,10 +21,10 @@ int cleanAllListNodes(Tno_ls **p_inicio) {
   }
 }
 
-int insertNodeInListStart(Tno_ls **p_inicio, int info) {
-  Tno_ls *no_novo;
+int insertNodeInListStart(ListNode **p_inicio, int info) {
+  ListNode *no_novo;
 
-  no_novo = (Tno_ls *)malloc(sizeof(Tno_ls));
+  no_novo = (ListNode *)malloc(sizeof(ListNode));
   no_novo->dado = info;
 
   if (*p_inicio == NULL) {
@@ -37,9 +37,9 @@ int insertNodeInListStart(Tno_ls **p_inicio, int info) {
   return 0;
 }
 
-int insertNodeInListGivenPosition(Tno_ls **p_inicio, int info, int pos) {
+int insertNodeInListGivenPosition(ListNode **p_inicio, int info, int pos) {
   int tam;
-  Tno_ls *no_novo, *percorre;
+  ListNode *no_novo, *percorre;
 
   if (pos <= 0)
     return 1;
@@ -48,7 +48,7 @@ int insertNodeInListGivenPosition(Tno_ls **p_inicio, int info, int pos) {
   if (pos > tam + 1)
     return 2;
 
-  no_novo = (Tno_ls *)malloc(sizeof(Tno_ls));
+  no_novo = (ListNode *)malloc(sizeof(ListNode));
   no_novo->dado = info;
 
   if (pos == 1) {
@@ -70,10 +70,10 @@ int insertNodeInListGivenPosition(Tno_ls **p_inicio, int info, int pos) {
   return 0;
 }
 
-int insertNodeInListEnd(Tno_ls **p_inicio, int info) {
-  Tno_ls *no_novo, *percorre;
+int insertNodeInListEnd(ListNode **p_inicio, int info) {
+  ListNode *no_novo, *percorre;
 
-  no_novo = (Tno_ls *)malloc(sizeof(Tno_ls));
+  no_novo = (ListNode *)malloc(sizeof(ListNode));
   no_novo->dado = info;
   no_novo->prox = NULL;
 
@@ -89,7 +89,7 @@ int insertNodeInListEnd(Tno_ls **p_inicio, int info) {
   return 0;
 }
 
-int getAllListNodes(Tno_ls *c_inicio) {
+int getAllListNodes(ListNode *c_inicio) {
   int i;
   if (c_inicio == NULL) {
     return 1;
@@ -103,8 +103,8 @@ int getAllListNodes(Tno_ls *c_inicio) {
   return 0;
 }
 
-int getListSize(Tno_ls *c_inicio, int *tam) {
-  Tno_ls *percorre;
+int getListSize(ListNode *c_inicio, int *tam) {
+  ListNode *percorre;
   *tam = 0;
   if (c_inicio != NULL) {
     percorre = c_inicio;
@@ -117,7 +117,7 @@ int getListSize(Tno_ls *c_inicio, int *tam) {
   }
 }
 
-int getGivenValuePosition(Tno_ls *c_inicio, int valor, int *pos) {
+int getGivenValuePosition(ListNode *c_inicio, int valor, int *pos) {
   *pos = 0;
   while (c_inicio != NULL) {
     (*pos)++;
@@ -130,8 +130,8 @@ int getGivenValuePosition(Tno_ls *c_inicio, int valor, int *pos) {
   return 1;
 }
 
-int removeNodeInListStart(Tno_ls **p_inicio) {
-  Tno_ls *aux;
+int removeNodeInListStart(ListNode **p_inicio) {
+  ListNode *aux;
   if (*p_inicio == NULL) {
     return 1;
   } else {
@@ -142,7 +142,7 @@ int removeNodeInListStart(Tno_ls **p_inicio) {
   }
 }
 
-int removeNodeInListGivenPosition(Tno_ls **p_inicio, int pos) {
+int removeNodeInListGivenPosition(ListNode **p_inicio, int pos) {
   if (*p_inicio == NULL)
     return 1;
 
@@ -157,7 +157,7 @@ int removeNodeInListGivenPosition(Tno_ls **p_inicio, int pos) {
     return 0;
   }
 
-  Tno_ls *aux, *aux2, *remover;
+  ListNode *aux, *aux2, *remover;
   aux = *p_inicio;
   for (int contador = 0; contador < pos; contador++) {
     aux = aux->prox;
@@ -171,7 +171,7 @@ int removeNodeInListGivenPosition(Tno_ls **p_inicio, int pos) {
   return 0;
 }
 
-int removeNodeInListEnd(Tno_ls **p_inicio) {
+int removeNodeInListEnd(ListNode **p_inicio) {
   if (*p_inicio == NULL)
     return 1;
   else if ((*p_inicio)->prox == NULL) {
@@ -180,7 +180,7 @@ int removeNodeInListEnd(Tno_ls **p_inicio) {
     return 0;
   }
 
-  Tno_ls *aux, *remover;
+  ListNode *aux, *remover;
   aux = *p_inicio;
   while (aux->prox->prox != NULL)
     aux = aux->prox;
@@ -192,8 +192,8 @@ int removeNodeInListEnd(Tno_ls **p_inicio) {
   return 0;
 }
 
-int invertList(Tno_ls **p_inicio) {
-  Tno_ls *percorre, *aux_1, *aux_2, *aux_3;
+int invertList(ListNode **p_inicio) {
+  ListNode *percorre, *aux_1, *aux_2, *aux_3;
   percorre = *p_inicio;
   if (percorre == NULL) {
     return 1;
@@ -217,9 +217,9 @@ int invertList(Tno_ls **p_inicio) {
   return 0;
 }
 
-int invertList_2(Tno_ls **p_inicio) {
+int invertList_2(ListNode **p_inicio) {
   int i, erro, tam, info;
-  Tno_ls *inicio_lista_aux;
+  ListNode *inicio_lista_aux;
 
   erro = getListSize(*p_inicio, &tam);
   if (tam == 0) {
@@ -239,15 +239,15 @@ int invertList_2(Tno_ls **p_inicio) {
   return 0;
 }
 
-int VerifyRepeatedValueInList(Tno_ls *c_inicio, int info, int *resp) {
+int VerifyRepeatedValueInList(ListNode *c_inicio, int info, int *resp) {
   if (c_inicio == NULL)
     return 1;
 
   *resp = 0;
-  Tno_ls *aux = c_inicio;
+  ListNode *aux = c_inicio;
   while (aux->prox != NULL) {
     if (aux->dado == info) {
-      Tno_ls *aux2 = aux->prox;
+      ListNode *aux2 = aux->prox;
       while (aux2 != NULL) {
         if (aux2->dado == info) {
           (*resp)++;
@@ -263,12 +263,12 @@ int VerifyRepeatedValueInList(Tno_ls *c_inicio, int info, int *resp) {
   return 0;
 }
 
-int countElementsAboveValue(Tno_ls *c_inicio, int info, int *quant) {
+int countElementsAboveValue(ListNode *c_inicio, int info, int *quant) {
   *quant = 0;
   if (c_inicio == NULL)
     return 1;
 
-  Tno_ls *aux = c_inicio;
+  ListNode *aux = c_inicio;
   while (aux != NULL) {
     if (aux->dado > info)
       (*quant)++;

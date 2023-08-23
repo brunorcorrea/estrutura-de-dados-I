@@ -7,11 +7,11 @@ int main(void) {
 
   int info;
   int resp, pos;
-  Tno_ls *inicio;
+  ListNode *inicio;
   int chosenOption;
   int erro = initializeEmptyList(&inicio);
 
-  printf("Tamanho do no: %d\n\n", sizeof(Tno_ls));
+  printf("Tamanho do no: %d\n\n", sizeof(ListNode));
   awaitUserInput();
 
   do {

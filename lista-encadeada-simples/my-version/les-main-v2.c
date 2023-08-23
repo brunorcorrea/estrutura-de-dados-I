@@ -40,7 +40,7 @@ int main(void) {
 
       break;
     case 3:
-      erro = Remover_inicio_LS(&inicio);
+      erro = removeNodeInListStart(&inicio);
       if (erro == 1) {
         printf("\nLista vazia. Impossivel remover");
       }
@@ -48,7 +48,7 @@ int main(void) {
       awaitUserInput();
       break;
     case 4:
-      erro = Listar_LS(inicio);
+      erro = getAllListNodes(inicio);
       if (erro == 1) {
         printf("\nLista vazia. Impossivel listar !\n");
       }
@@ -64,7 +64,7 @@ int main(void) {
       awaitUserInput();
       break;
     case 6:
-      erro = Inverter_LS_2(&inicio);
+      erro = invertList_2(&inicio);
       if (erro == 1)
         printf("\nLista vazia. Inversao nao realizada !\n");
       else
@@ -76,7 +76,7 @@ int main(void) {
       printf("Posicao para remocao: ");
       scanf("%d", &pos);
 
-      erro = Remover_meio_LS(&inicio, pos);
+      erro = removeNodeInListGivenPosition(&inicio, pos);
       if (erro == 1)
         printf("Lista vazia. Remocao nao realizada !\n");
       else if (erro == 2)
@@ -85,7 +85,7 @@ int main(void) {
       awaitUserInput();
       break;
     case 8:
-      erro = Remover_fim_LS(&inicio);
+      erro = removeNodeInListEnd(&inicio);
       if (erro == 1) {
         printf("\nLista vazia. Impossivel remover ! \n");
       }
@@ -101,7 +101,7 @@ int main(void) {
       printf("Posicao de insercao: ");
       scanf("%d", &pos);
 
-      erro = Inserir_meio_LS(&inicio, info, pos);
+      erro = insertNodeInListGivenPosition(&inicio, info, pos);
       if (erro == 0)
         printf("Insercao realizada com sucesso\n");
 
@@ -112,7 +112,7 @@ int main(void) {
       scanf("%d", &info);
 
       int resp;
-      erro = Ver_Repete_Dado_LS(inicio, info, &resp);
+      erro = VerifyRepeatedValueInList(inicio, info, &resp);
       if (erro == 0) {
         if (resp == 1)
           printf("O dado esta repetido na estrutura !\n");
@@ -130,7 +130,7 @@ int main(void) {
       scanf("%d", &info);
 
       int quant;
-      erro = Maiorque_Dado_LS(inicio, info, &quant);
+      erro = countElementsAboveValue(inicio, info, &quant);
       if (erro == 0) {
         printf("\nQuantidade de elementos maior que o dado valor: %d\n", quant);
       } else {

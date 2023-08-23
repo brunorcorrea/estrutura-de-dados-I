@@ -37,14 +37,14 @@ int insertNodeInListStart(Tno_ls **p_inicio, int info) {
   return 0;
 }
 
-int Inserir_meio_LS(Tno_ls **p_inicio, int info, int pos) {
+int insertNodeInListGivenPosition(Tno_ls **p_inicio, int info, int pos) {
   int tam;
   Tno_ls *no_novo, *percorre;
 
   if (pos <= 0)
     return 1;
 
-  Obter_Tamanho_LS(*p_inicio, &tam);
+  getListSize(*p_inicio, &tam);
   if (pos > tam + 1)
     return 2;
 
@@ -89,7 +89,7 @@ int insertNodeInListEnd(Tno_ls **p_inicio, int info) {
   return 0;
 }
 
-int Listar_LS(Tno_ls *c_inicio) {
+int getAllListNodes(Tno_ls *c_inicio) {
   int i;
   if (c_inicio == NULL) {
     return 1;
@@ -103,7 +103,7 @@ int Listar_LS(Tno_ls *c_inicio) {
   return 0;
 }
 
-int Obter_Tamanho_LS(Tno_ls *c_inicio, int *tam) {
+int getListSize(Tno_ls *c_inicio, int *tam) {
   Tno_ls *percorre;
   *tam = 0;
   if (c_inicio != NULL) {
@@ -117,7 +117,7 @@ int Obter_Tamanho_LS(Tno_ls *c_inicio, int *tam) {
   }
 }
 
-int Obter_Pos_LS(Tno_ls *c_inicio, int valor, int *pos) {
+int getGivenValuePosition(Tno_ls *c_inicio, int valor, int *pos) {
   *pos = 0;
   while (c_inicio != NULL) {
     (*pos)++;
@@ -130,7 +130,7 @@ int Obter_Pos_LS(Tno_ls *c_inicio, int valor, int *pos) {
   return 1;
 }
 
-int Remover_inicio_LS(Tno_ls **p_inicio) {
+int removeNodeInListStart(Tno_ls **p_inicio) {
   Tno_ls *aux;
   if (*p_inicio == NULL) {
     return 1;
@@ -142,12 +142,12 @@ int Remover_inicio_LS(Tno_ls **p_inicio) {
   }
 }
 
-int Remover_meio_LS(Tno_ls **p_inicio, int pos) {
+int removeNodeInListGivenPosition(Tno_ls **p_inicio, int pos) {
   if (*p_inicio == NULL)
     return 1;
 
   int tam;
-  Obter_Tamanho_LS(*p_inicio, &tam);
+  getListSize(*p_inicio, &tam);
   if (pos >= tam)
     return 2;
 
@@ -171,7 +171,7 @@ int Remover_meio_LS(Tno_ls **p_inicio, int pos) {
   return 0;
 }
 
-int Remover_fim_LS(Tno_ls **p_inicio) {
+int removeNodeInListEnd(Tno_ls **p_inicio) {
   if (*p_inicio == NULL)
     return 1;
   else if ((*p_inicio)->prox == NULL) {
@@ -192,7 +192,7 @@ int Remover_fim_LS(Tno_ls **p_inicio) {
   return 0;
 }
 
-int Inverter_LS(Tno_ls **p_inicio) {
+int invertList(Tno_ls **p_inicio) {
   Tno_ls *percorre, *aux_1, *aux_2, *aux_3;
   percorre = *p_inicio;
   if (percorre == NULL) {
@@ -217,11 +217,11 @@ int Inverter_LS(Tno_ls **p_inicio) {
   return 0;
 }
 
-int Inverter_LS_2(Tno_ls **p_inicio) {
+int invertList_2(Tno_ls **p_inicio) {
   int i, erro, tam, info;
   Tno_ls *inicio_lista_aux;
 
-  erro = Obter_Tamanho_LS(*p_inicio, &tam);
+  erro = getListSize(*p_inicio, &tam);
   if (tam == 0) {
     return 1;
   } else if (tam == 1) {
@@ -231,7 +231,7 @@ int Inverter_LS_2(Tno_ls **p_inicio) {
     for (i = 1; i <= tam; i++) {
       info = (*p_inicio)->dado;
       // Obter_Dado_LS (p_inicio, 1, &info);
-      Remover_inicio_LS(p_inicio);
+      removeNodeInListStart(p_inicio);
       insertNodeInListStart(&inicio_lista_aux, info);
     }
     *p_inicio = inicio_lista_aux;
@@ -239,7 +239,7 @@ int Inverter_LS_2(Tno_ls **p_inicio) {
   return 0;
 }
 
-int Ver_Repete_Dado_LS(Tno_ls *c_inicio, int info, int *resp) {
+int VerifyRepeatedValueInList(Tno_ls *c_inicio, int info, int *resp) {
   if (c_inicio == NULL)
     return 1;
 
@@ -263,7 +263,7 @@ int Ver_Repete_Dado_LS(Tno_ls *c_inicio, int info, int *resp) {
   return 0;
 }
 
-int Maiorque_Dado_LS(Tno_ls *c_inicio, int info, int *quant) {
+int countElementsAboveValue(Tno_ls *c_inicio, int info, int *quant) {
   *quant = 0;
   if (c_inicio == NULL)
     return 1;

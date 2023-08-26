@@ -31,6 +31,7 @@ int Inicializar2_LS(Tdescritorno_ls *pdesc) {
 
   while (pdesc->prim != NULL)
     Remover_inicio_LS(pdesc);
+  Inicializar_LS(pdesc);
 
   return 0;
 }
@@ -139,15 +140,23 @@ int Remover_fim_LS(Tdescritorno_ls *pdesc) {
 int Remover_meio_LS(Tdescritorno_ls *pdesc, int pos) {
   if (pdesc == NULL || pdesc->prim == NULL)
     return 1;
-
   if (pos >= pdesc->tam)
     return 2;
 
-  if (pos == 0) {
-    Remover_inicio_LS(pdesc);
-  } else if (pos == pdesc->tam - 1) {
-    Remover_fim_LS(pdesc);
-  }
+  if (pos == 0)
+    return Remover_inicio_LS(pdesc);
+  if (pos == pdesc->tam - 1)
+    return Remover_fim_LS(pdesc);
+
+  Tno_ls *aux = pdesc->prim;
+  for (int contador = 0; pos > contador; contador++)
+    aux = aux->prox;
+
+  Tno_ls *remover = aux->prox;
+  aux->prox = remover->prox;
+
+  pdesc->tam--;
+  free(remover);
 
   return 0;
 }

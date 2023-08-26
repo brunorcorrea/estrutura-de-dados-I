@@ -70,6 +70,7 @@ static char *given_valid_list_size_when_remove_end_test() {
   Inserir_inicio_LS(&desc, 75);
   Inserir_inicio_LS(&desc, 34);
 
+  mu_assert("error: remove end valid list size", desc.tam == 2);
   mu_assert("error: remove end valid list size", Remover_fim_LS(&desc) == 0);
   mu_assert("error: remove end valid list size", desc.tam == 1);
   mu_assert("error: remove end valid list size", desc.ult->dado == 75);
@@ -80,6 +81,7 @@ static char *given_valid_list_size_when_remove_end_test() {
 // Tests for: Remover_meio_LS
 
 static char *given_empty_list_when_remove_position_test() {
+  mu_assert("error: remove end valid list size", desc.tam == 0);
   mu_assert("error: remove position from empty list",
             Remover_meio_LS(&desc, 3) == 1);
   return 0;
@@ -101,23 +103,24 @@ static char *given_position_above_list_size_when_remove_position_test() {
   return 0;
 }
 
-static char *given_valid_position_when_remove_position_test() {
+static char *given_1_node_and_position_0_when_remove_position_test() {
   Inserir_inicio_LS(&desc, 12);
 
   mu_assert("error: remove valid position '0'", Remover_meio_LS(&desc, 0) == 0);
   mu_assert("error: remove valid position'0'", desc.tam == 0);
 
-  //     Inserir_inicio_LS(&desc, 57);
-  //     Inserir_inicio_LS(&desc, 23);
-  //   mu_assert("error: remove valid position '1'", Remover_meio_LS(&desc, 1)
-  //   == 0); mu_assert("error: remove valid position '1'", desc.tam == 1);
+  return 0;
+}
 
-  //   Inserir_inicio_LS(&desc, 54);
-  //   Inserir_inicio_LS(&desc, 32);
-  //   Inserir_inicio_LS(&desc, 87);
-  //   Inserir_inicio_LS(&desc, 76);
-  //   mu_assert("error: remove valid position '2'", Remover_meio_LS(&desc, 0)
-  //   == 0); mu_assert("error: remove valid position '2'", desc.tam == 0);
+static char *given_valid_position_when_remove_position_test() {
+  Inserir_inicio_LS(&desc, 54);
+  Inserir_inicio_LS(&desc, 32);
+  Inserir_inicio_LS(&desc, 87);
+  Inserir_inicio_LS(&desc, 76);
+
+  mu_assert("error: remove valid position '2'", Remover_meio_LS(&desc, 2) == 0);
+  mu_assert("error: remove valid position '2'", desc.tam == 3);
+
   return 0;
 }
 
@@ -156,6 +159,9 @@ static char *all_tests() {
   cleanList();
 
   mu_run_test(given_position_above_list_size_when_remove_position_test);
+  cleanList();
+
+  mu_run_test(given_1_node_and_position_0_when_remove_position_test);
   cleanList();
 
   mu_run_test(given_valid_position_when_remove_position_test);

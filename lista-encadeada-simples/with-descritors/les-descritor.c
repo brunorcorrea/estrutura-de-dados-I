@@ -119,6 +119,39 @@ int Remover_inicio_LS(Tdescritorno_ls *pdesc) {
   return 0;
 }
 
+int Remover_fim_LS(Tdescritorno_ls *pdesc) {
+  if (pdesc == NULL || pdesc->ult == NULL)
+    return 1;
+
+  if (pdesc->tam == 1)
+    return Remover_inicio_LS(pdesc);
+
+  Tno_ls *aux = pdesc->prim;
+  for (int contador = 1; pdesc->tam > contador; contador++)
+    aux = aux->prox;
+
+  pdesc->ult = aux;
+  pdesc->tam--;
+  free(aux->prox);
+  return 0;
+}
+
+int Remover_meio_LS(Tdescritorno_ls *pdesc, int pos) {
+  if (pdesc == NULL || pdesc->prim == NULL)
+    return 1;
+
+  if (pos >= pdesc->tam)
+    return 2;
+
+  if (pos == 0) {
+    Remover_inicio_LS(pdesc);
+  } else if (pos == pdesc->tam - 1) {
+    Remover_fim_LS(pdesc);
+  }
+
+  return 0;
+}
+
 int Listar_LS(Tdescritorno_ls cdesc) {
   if (cdesc.prim == NULL || cdesc.ult == NULL) {
     return 1;

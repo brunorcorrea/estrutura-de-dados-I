@@ -18,23 +18,39 @@ typedef struct no_ld {
 // 1 - ...
 // 2 - ...
 
+#ifdef _WIN32
+void clearConsole() { system("cls"); }
+
+void awaitUserInput() { system("pause"); }
+#endif
+
+#ifdef linux
+void clearConsole() { system("clear"); }
+
+void awaitUserInput() {
+  printf("\nPressione qualquer tecla para continuar...\n");
+  getchar();
+}
+#endif
+
 /* -----------------------------------------------------------------------------
 Prototipos das funcoes
 ------------------------------------------------------------------------------*/
 int Inicializar_LD(Tno_ld **inicio);
 
-int Inicializar2_LD(Tno_ld **p_inicio);                    //
-int Inserir_inicio_LD(Tno_ld **p_inicio, int info);        //
-int Inserir_fim_LD(Tno_ld **p_inicio, int info);           //
-int Inserir_meio_LD(Tno_ld **p_inicio, int info, int pos); //-
-int Remover_inicio_LD(Tno_ld **p_inicio);                  //
-int Remover_meio_LD(Tno_ld **p_inicio, int pos);           //-
-int Remover_fim_LD(Tno_ld **p_inicio);                     //-
-int Listar_LD(Tno_ld *c_inicio);                           //
-int Listar_Invertido_LD(Tno_ld *c_inicio);                 //-
-int Obter_Tamanho_LD(Tno_ld *c_inicio, int *tam);          //-
-int Obter_pos_LD(Tno_ld *c_inicio, int dado, int *pos);    //-
-int Inverter_LD(Tno_ld **p_inicio);                        //
+int Inicializar2_LD(Tno_ld **p_inicio);
+int Inserir_inicio_LD(Tno_ld **p_inicio, int info);
+int Inserir_fim_LD(Tno_ld **p_inicio, int info);
+int Inserir_meio_LD(Tno_ld **p_inicio, int info, int pos);
+int Remover_inicio_LD(Tno_ld **p_inicio);
+int Remover_meio_LD(Tno_ld **p_inicio, int pos);
+int Remover_fim_LD(Tno_ld **p_inicio);
+int Listar_LD(Tno_ld *c_inicio);
+int Listar_Invertido_LD(Tno_ld *c_inicio);
+int Obter_Tamanho_LD(Tno_ld *c_inicio, int *tam);
+int Obter_pos_LD(Tno_ld *c_inicio, int dado, int *pos);
+int Inverter_LD(Tno_ld **p_inicio);
+int Remover_metade_LED(Tno_ld **p_inicio);
 
 /* ----------------------------------------------------------------------------
 Fun��es de apoio
@@ -61,7 +77,7 @@ int main(void) {
   int q; /* receber a opcao do usuario */
   erro = Inicializar_LD(&ini);
   do {
-    system("cls");
+    clearConsole();
     printf("LISTA ENCADEADA DUPLA - LED");
     printf("\n\nOpcoes: \n\n");
     printf("1 -> Inserir no inicio \n");
@@ -74,10 +90,11 @@ int main(void) {
     printf("8 -> Remover no final\n");
     printf("9 -> Sair\n");
     printf("10 -> Mostrar toda a lista invertida\n");
-    printf("11-> Inserir muitos dados\n");
+    printf("11 -> Inserir muitos dados\n");
     printf("12 -> Obter tamanho\n");
     printf("13 -> Obter posicao\n");
     printf("14 -> Inserir no meio\n");
+    printf("15 -> Remover a primeira metade da lista\n");
     printf("\n:");
     scanf("%d", &q); /* Ler a opcao do usuario */
     switch (q) {
@@ -87,7 +104,7 @@ int main(void) {
       erro = Inserir_inicio_LD(&ini, info);
       if (erro == 0)
         printf("Insercao realizada com sucesso\n");
-      system("pause");
+      awaitUserInput();
       break;
     case 2:
       printf("Dado para insercao na lista: ");
@@ -99,25 +116,25 @@ int main(void) {
       if (erro == 1) {
         printf("\nLista vazia. Impossivel remover");
       }
-      system("pause");
+      awaitUserInput();
       break;
     case 4:
       erro = Listar_LD(ini);
       if (erro == 1) {
         printf("\nLista vazia. Impossivel listar");
       }
-      system("pause");
+      awaitUserInput();
       break;
     case 5:
       erro = Inicializar2_LD(&ini);
       printf("\nInicializacao realizada com sucesso !\n");
       printf("\nLISTA VAZIA !\n");
-      system("pause");
+      awaitUserInput();
       break;
     case 6:
       erro = Inverter_LD(&ini);
       printf("\nInversao realizada !\n");
-      system("pause");
+      awaitUserInput();
       break;
     case 7:
       printf("Posicao para remocao na lista: ");
@@ -130,7 +147,7 @@ int main(void) {
       } else if (erro == 3) {
         printf("\nPosicao maior que o tamanho da lsita\n");
       }
-      system("pause");
+      awaitUserInput();
       break;
     case 8:
       erro = Remover_fim_LD(&ini);
@@ -139,21 +156,21 @@ int main(void) {
       } else {
         printf("\nRemocao realizada com sucesso\n");
       }
-      system("pause");
+      awaitUserInput();
       break;
     case 10:
       erro = Listar_Invertido_LD(ini);
       if (erro == 1) {
         printf("\nLista vazia. Impossivel listar");
       }
-      system("pause");
+      awaitUserInput();
       break;
     case 11:
       min = 1;
       max = 100;
       t_ini = clock();
       for (i = 1; i <= 100000; i++) {
-        // info = gera_dado(min, max);
+        info = gera_dado(min, max);
         Inserir_inicio_LD(&ini, i);
         if ((i % 1000) == 0) {
 
@@ -162,12 +179,12 @@ int main(void) {
                  ((double)t_fim) / ((CLOCKS_PER_SEC / 1000)));
         }
       }
-      system("pause");
+      awaitUserInput();
       break;
     case 12:
       Obter_Tamanho_LD(ini, &info);
       printf("\nA lista possui tamanho: %d\n", info);
-      system("pause");
+      awaitUserInput();
       break;
     case 13:
       printf("Dado para procurar na lista: ");
@@ -178,7 +195,7 @@ int main(void) {
       } else if (erro == 1) {
         printf("\nO dado nao esta presente na lista\n");
       }
-      system("pause");
+      awaitUserInput();
       break;
     case 14:
       printf("Posicao para insercao na lista: ");
@@ -193,7 +210,18 @@ int main(void) {
       } else {
         printf("\nInsercao realizada com sucesso\n");
       }
-      system("pause");
+      awaitUserInput();
+      break;
+    case 15:
+      erro = Remover_metade_LED(&ini);
+      if (erro == 0) {
+        printf("\nRemocao realizada com sucesso\n");
+      } else if (erro == 1) {
+        printf("\nRemocao nao realizada. A lista esta vazia\n");
+      } else if (erro == 2) {
+        printf("\nA lista so possui um elemento\n");
+      }
+      awaitUserInput();
       break;
     case 9:
       break;
@@ -400,7 +428,7 @@ int Remover_inicio_LD(Tno_ld **p_inicio) {
   } else {
     aux = *p_inicio;
     *p_inicio = (*p_inicio)->prox;
-    (*p_inicio)->ant = NULL;
+    if(*p_inicio != NULL) (*p_inicio)->ant = NULL;
     free(aux);
     return 0;
   }
@@ -483,5 +511,26 @@ int Inverter_LD(Tno_ld **p_inicio) {
       percorre = percorre->ant;
     }
   }
+  return 0;
+}
+
+int Remover_metade_LED(Tno_ld **p_inicio) {
+  if (p_inicio == NULL || *p_inicio == NULL)
+    return 1;
+
+  Tno_ld *percorre = *p_inicio;
+  if (percorre->prox == NULL)
+    return 2;
+
+  int tam;
+  Obter_Tamanho_LD(percorre, &tam);
+  for (int contador = 0; contador < tam / 2; contador++) {
+    Tno_ld *remover = percorre;
+    percorre = percorre->prox;
+    percorre->ant = NULL;
+    free(remover);
+  }
+
+  *p_inicio = percorre;
   return 0;
 }

@@ -188,6 +188,28 @@ int Obter_dado_LS(Tdescritorno_ls cdesc, int pos, int *dado) {
   return 0;
 }
 
+int Obter_pos_LS(Tdescritorno_ls cdesc, int dado, int *pos) {
+  if (cdesc.prim == NULL)
+    return 1;
+
+  while (cdesc.prim != NULL) {
+    if (cdesc.prim->dado == dado)
+      return 0;
+
+    if (cdesc.prim->prox == NULL)
+      break;
+
+    cdesc.prim = cdesc.prim->prox;
+  }
+
+  return 2;
+}
+
+int Obter_Tamanho_LS(Tdescritorno_ls cdesc, int *tam) {
+  *tam = cdesc.tam;
+  return 0;
+}
+
 // int Copia_lista(Tdescritorno_ls *l1, Tdescritorno_ls *l2) {
 //   Tno_ls *aux;
 //   aux = l1->prim;

@@ -4,15 +4,18 @@
 
 int tests_run = 0;
 Tdescritorno_ls desc;
-int pos;
-int dado;
+int pos = -1;
+int dado = -1;
 
-void cleanList() { Inicializar2_LS(&desc); }
+void cleanList() {
+  pos = dado = 0;
+  Inicializar2_LS(&desc);
+}
 
 // Tests for: Inicializar_LS
 
 static char *initialize_list_test() {
-  mu_assert("error: initialize list failed", Inicializar_LS(&desc) == 0);
+  mu_assert("error: initialize list", Inicializar_LS(&desc) == 0);
   return 0;
 }
 
@@ -124,6 +127,55 @@ static char *given_valid_position_when_remove_position_test() {
   return 0;
 }
 
+// Tests for: Obter_pos_LS
+
+static char *given_empty_list_when_get_pos_test() {
+  mu_assert("error: get position for empty list",
+            Obter_pos_LS(desc, dado, &pos) == 1);
+
+  return 0;
+}
+
+static char *given_data_that_isnt_in_list_when_get_pos_test() {
+  Inserir_inicio_LS(&desc, 654);
+
+  mu_assert("error: get position for data not present in list",
+            Obter_pos_LS(desc, 123, &pos) == 2);
+  return 0;
+}
+
+static char *given_valid_list_when_get_pos_test() {
+  int dado = 235;
+  Inserir_inicio_LS(&desc, dado);
+
+  mu_assert("error: get position for valid data",
+            Obter_pos_LS(desc, dado, &pos) == 0);
+  mu_assert("error: get position for valid data", pos == 0);
+  return 0;
+}
+
+// Tests for: Obter_Tamanho_LS
+
+static char *given_empty_list_when_get_size_test() {
+  int tam;
+  mu_assert("error: get size of empty list", Obter_Tamanho_LS(desc, &tam) == 0);
+  mu_assert("error: get size of empty list", tam == 0);
+
+  return 0;
+}
+
+static char *given_elements_list_when_get_size_test() {
+  int tam;
+
+  Inserir_inicio_LS(&desc, 54);
+  Inserir_inicio_LS(&desc, 32);
+
+  mu_assert("error: get size of empty list", Obter_Tamanho_LS(desc, &tam) == 0);
+  mu_assert("error: get size of empty list", tam == 2);
+
+  return 0;
+}
+
 // UNIT TESTS RUNNER
 
 static char *all_tests() {
@@ -165,6 +217,23 @@ static char *all_tests() {
   cleanList();
 
   mu_run_test(given_valid_position_when_remove_position_test);
+  cleanList();
+
+  // Obter_pos_LS
+  mu_run_test(given_empty_list_when_get_pos_test);
+  cleanList();
+
+  mu_run_test(given_valid_list_when_get_pos_test);
+  cleanList();
+
+  mu_run_test(given_data_that_isnt_in_list_when_get_pos_test);
+  cleanList();
+
+  // Obter_Tamanho_LS
+  mu_run_test(given_empty_list_when_get_size_test);
+  cleanList();
+
+  mu_run_test(given_elements_list_when_get_size_test);
   cleanList();
 
   return 0;

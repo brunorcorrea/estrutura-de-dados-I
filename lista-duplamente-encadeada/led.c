@@ -136,6 +136,8 @@ int main(void) {
       erro = Remover_fim_LD(&ini);
       if (erro == 1) {
         printf("\nLista vazia. Impossivel remover\n");
+      } else {
+        printf("\nRemocao realizada com sucesso\n");
       }
       system("pause");
       break;
